@@ -1,0 +1,70 @@
+
+body {
+  background-color: skyblue;
+  
+  
+}
+  .center-content {
+display: flex;
+align-items: center;
+justify-content: center;
+height: 100vh; /* 画面の高さいっぱいに表示 */
+}
+
+#message{
+  width: 280px;
+  
+}
+
+.my-2 {
+  margin-bottom: 20px; 
+  margin-top: 20px
+}
+
+.col-3, .col-6, .col-2 {
+  float: left;
+  margin: 10px;
+}
+
+.my-2 {
+    /* 横に並べた要素の下に次の行が来るようにする */
+  clear: both; 
+  /* なぜか行間が開かない */
+  margin-bottom: 20px;
+  line-height:20px
+}
+
+
+
+/* それぞれの幅の指定（任意の幅に調整） */
+.col-3 {
+  width: 70px; 
+  background-color: coral;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  
+}
+
+.col-6 {
+  width: 500px; 
+  background-color: greenyellow;
+  border-radius: 10px;
+  
+  
+}
+
+.col-2 {
+  width: 30px; 
+  background-color: gray;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+
+}
+
+
+.imgtag{
+margin-bottom: 40px;
+}
+

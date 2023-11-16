@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="jp">
+  <head>
+        <title>MySNSアプリ</title>
+        <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-database.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+        <script type="text/javascript" src="apikey.js"></script>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="styletest.css">
+
+        
+
+  </head>
+  <body>
+
+    <div class="container m-3">
+        <div class="row">
+            <div class="col-12">
+            
+              <img src="img/chatimg.png" class="imgtag">
+            </div>
+
+            <div class="col-12">
+                <input id="name" placeholder="お名前">
+                <input id="message" placeholder="ご意見">
+                <button id="send">投　稿</button>
+                
+                
+            </div>
+            
+            <div class="col-5">
+                <div id="messages" class="container"></ul>
+            </div>
+        </div>
+    </div>
+
+  
+
+    <script>
+        // Set the configuration for your app
+        // TODO: Replace with your project's config object
+    
+        // この下にAPIキーを入れる
+        // const config = {
+        //     /
+        // };
+
+
+        // この上にAPIキーを入れる
+
+        firebase.initializeApp(config);
+
+        // Get a reference to the database service
+        const database = firebase.database();
+    </script>
+
+    <script>
+        // データベースの参照を準備
+        var Ref = database.ref().child('message')
+    
+        // 既存メッセージを表示
+        Ref.on('child_added', function(obj) {
+            var msg = obj.val();
+            var $div = $('<div></div>',{"class":"my-2"}).prependTo('#messages');
+            $('<div>',{"class":"col-3"}).text(msg.name).appendTo($div);
+            $('<div>',{"class":"col-6"}).text("　" + msg.message).appendTo($div);
+            $('<div>',{"class":"delete col-2", id:obj.key}).text("×").appendTo($div);
+        });
+    
+        $('#send').click(function() {
+            if($("#name").val() != "" && $("#message").val() != ""){
+               
+              // 新規メッセージを投稿する
+                Ref.push({
+                    name: $('#name').val(),
+                    message: $('#message').val()
+                });
+
+                // 入力が終わったら内容が消える
+                $("#name").val('');
+                $("#message").val('');
+            }
+        });
+        
+        // 投稿内容を削除する
+        $(document).on('click',".delete",function(){
+            var result = window.confirm('このメッセージを削除しますか？');
+            if(result){
+                var value = $(this).attr('id');
+                Ref.child(value).remove();
+                $(this).parent().remove();
+            }
+        });
+    </script>
+
+  </body>
+</html>
